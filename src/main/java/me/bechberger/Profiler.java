@@ -42,7 +42,7 @@ public class Profiler implements Runnable {
         // one of the stack trace gathering methods
         // Calling Thread.getAllStackTraces() only obtains a safe point ones
         Thread.getAllStackTraces().forEach((thread, stackTraceElements) -> {
-            if (thread.isAlive() && !thread.isDaemon()) { // exclude demon threads
+            if (!thread.isDaemon()) { // exclude daemon threads
                 store.addSample(stackTraceElements);
             }
         });

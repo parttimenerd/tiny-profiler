@@ -5,9 +5,18 @@ import java.time.Duration;
 import java.util.Optional;
 
 public class Options {
+    /**
+     * interval option
+     */
     private Duration interval = Duration.ofMillis(10);
+    /**
+     * flamegraph option
+     */
     private Optional<Path> flamePath;
 
+    /**
+     * table option
+     */
     private boolean printMethodTable = true;
 
     private void printHelp() {
