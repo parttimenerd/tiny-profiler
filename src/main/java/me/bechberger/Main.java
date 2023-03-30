@@ -14,7 +14,7 @@ public class Main {
     }
 
     private void run(Options options) {
-        Thread t = new Thread(new Profiler(options));
+        Thread t = new Thread(Profiler.newInstance(options));
         t.setDaemon(true);
         t.setName("Profiler");
         t.start();

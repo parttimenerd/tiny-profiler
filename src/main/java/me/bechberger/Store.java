@@ -4,10 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.nio.file.Path;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Stream;
 
 /**
@@ -109,9 +106,12 @@ public class Store {
     }
 
     private void updateMethodTables(List<String> trace) {
+        Set<String> alreadyCounted = new HashSet<>();
         for (int i = 0; i < trace.size(); i++) {
             String method = trace.get(i);
-            updateMethodTables(method, i == 0);
+            if (alreadyCounted.add(method)) {
+                updateMethodTables(method, i == 0);
+            }
         }
     }
 

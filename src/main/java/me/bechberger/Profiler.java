@@ -6,35 +6,49 @@ import java.time.Duration;
  * The sampling profiler
  */
 public class Profiler implements Runnable {
+    private volatile boolean stop = false;
     private final Options options;
     private final Store store;
 
-    public Profiler(Options options) {
+    private final Thread thread;
+
+    private Profiler(Options options) {
         this.options = options;
         this.store = new Store(options.getFlamePath());
-        Runtime.getRuntime().addShutdownHook(new Thread(this::onEnd));
+        this.thread = Thread.currentThread();
     }
 
-    private static void sleep(Duration duration) {
+    public static Profiler newInstance(Options options) {
+        Profiler profiler = new Profiler(options);
+        Runtime.getRuntime().addShutdownHook(new Thread(profiler::onEnd));
+        return profiler;
+    }
+
+    private static void sleep(Duration duration) throws InterruptedException {
         if (duration.isNegative() || duration.isZero()) {
             return;
         }
-        try {
-            Thread.sleep(duration.toMillis(), duration.toNanosPart() % 1000000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        Thread.sleep(duration.toMillis(), duration.toNanosPart() % 1000000);
     }
 
     @Override
     public void run() {
-        while (true) {
+        while (!stop) {
             Duration start = Duration.ofNanos(System.nanoTime());
             sample();
             Duration duration = Duration.ofNanos(System.nanoTime()).minus(start);
             Duration sleep = options.getInterval().minus(duration);
-            sleep(sleep);
+            try {
+                sleep(sleep);
+            } catch (InterruptedException e) {
+                break;
+            }
         }
+        if (options.printMethodTable()) {
+            store.printMethodTable();
+        }
+        store.storeFlameGraphIfNeeded();
+        stop = false;
     }
 
     private void sample() {
@@ -49,9 +63,7 @@ public class Profiler implements Runnable {
     }
 
     private void onEnd() {
-        if (options.printMethodTable()) {
-            store.printMethodTable();
-        }
-        store.storeFlameGraphIfNeeded();
+        stop = true;
+        while (stop);
     }
 }
