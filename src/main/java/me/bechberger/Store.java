@@ -60,11 +60,14 @@ public class Store {
             s.print("""
                     <head>
                       <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/d3-flame-graph@4.1.3/dist/d3-flamegraph.css">
+                      <link rel="stylesheet" type="text/css" href="misc/d3-flamegraph.css">
                     </head>
                     <body>
                       <div id="chart"></div>
                       <script type="text/javascript" src="https://d3js.org/d3.v7.js"></script>
-                      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/d3-flame-graph@4.1.3/dist/d3-flamegraph.min.js"></script>
+                      <script type="text/javascript" src="misc/d3.v7.js"></script>
+                      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/d3-flame-graph@4.1.3/dist/d3-flamegraph.js"></script>
+                      <script type="text/javascript" src="misc/d3-flamegraph.js"></script>
                       <script type="text/javascript">
                       var chart = flamegraph().width(window.innerWidth);
                       d3.select("#chart").datum(""");

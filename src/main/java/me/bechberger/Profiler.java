@@ -10,12 +10,9 @@ public class Profiler implements Runnable {
     private final Options options;
     private final Store store;
 
-    private final Thread thread;
-
     private Profiler(Options options) {
         this.options = options;
         this.store = new Store(options.getFlamePath());
-        this.thread = Thread.currentThread();
     }
 
     public static Profiler newInstance(Options options) {

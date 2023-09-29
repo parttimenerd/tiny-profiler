@@ -12,7 +12,7 @@ public class Options {
     /**
      * flamegraph option
      */
-    private Optional<Path> flamePath;
+    private Optional<Path> flamePath = Optional.empty();
 
     /**
      * table option

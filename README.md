@@ -22,11 +22,26 @@ java -javaagent:target/tiny-profiler.jar=flamegraph=flame.html ...
 
 Example:
 
+Profiling the included fibonacci benchmark:
+
+```sh
+> java -javaagent:target/tiny-profiler.jar=flamegraph=flames.html Fib.java 40
+===== method table ======
+Total samples: 54
+Method                                                          Samples Percentage     On top Percentage
+com.sun.tools.javac.launcher.Main.run                                53      98,15          0       0,00
+com.sun.tools.javac.launcher.Main.main                               53      98,15          0       0,00
+com.sun.tools.javac.launcher.Main.compile                            28      51,85          0       0,00
+java.lang.reflect.Method.invoke                                      25      46,30          0       0,00
+```
+
+Profiling the [Renaissance](https://renaissance.dev) benchmark suite:
+
 ```sh
 # download a benchmark
 > test -e renaissance.jar || wget https://github.com/renaissance-benchmarks/renaissance/releases/download/v0.14.2/renaissance-gpl-0.14.2.jar -O renaissance.jar
 
-> java -javaagent:./target/tiny_profiler.jar=flamegraph=flame.html -jar renaissance.jar dotty
+> java -javaagent:./target/tiny-profiler.jar=flamegraph=flames.html -jar renaissance.jar dotty
 ...
 ===== method table ======
 Total samples: 11217
