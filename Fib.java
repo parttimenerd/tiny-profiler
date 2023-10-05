@@ -1,7 +1,8 @@
 public class Fib {
 
     public static void main(String[] args) {
-        System.out.println(fib(Integer.parseInt(args[0])));
+        int i = fib(Integer.parseInt(args[0]));
+        System.out.println(i);
     }
 
     static int fib(int n) {
