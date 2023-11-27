@@ -9,7 +9,7 @@ This profiler is a sampling profiler with can output method tables and
 flame graphs (via [d3-flame-graph](https://github.com/spiermar/d3-flame-graph)).
 The sampling is based on the `Thread.getAllStackTraces()` method, making it simple but also safepoint-biased.
 
-The profiler should work on any platform with a JDK 17 or newer. The usage is fairly simple:
+The profiler should work on any platform with a JDK 17 or newer ([JDK 11 version](https://github.com/StSchnell/tiny-profiler) by Stefan Schnell). The usage is fairly simple:
 
 ```sh
 # build it
